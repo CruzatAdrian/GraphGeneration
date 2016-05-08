@@ -70,39 +70,51 @@ public class MST {
 			System.out.println("===================================");
 			System.out.println("KRUSKAL WITH MATRIX USING INSERTION SORT");
 			startTime = System.currentTimeMillis();
-			Edge[] InsMat= matt.Kruskal(matt.InsertionSort());
+			Edge[] InsMat = matt.Kruskal(matt.InsertionSort());
 			endTime = System.currentTimeMillis();
-			System.out.println(edgeListToString(InsMat, startTime, endTime,n));
+			System.out.println(edgeListToString(InsMat, startTime, endTime,n, "Kruskal"));
 			System.out.println("===================================");
 			System.out.println("KRUSKAL WITH MATRIX USING COUNT SORT");
 			startTime = System.currentTimeMillis();
-			Edge[] CntMat= InsMat= matt.Kruskal(matt.CountSort());
+			Edge[] CntMat = matt.Kruskal(matt.CountSort());
 			endTime = System.currentTimeMillis();
-			System.out.println(edgeListToString(CntMat, startTime, endTime,n));
+			System.out.println(edgeListToString(CntMat, startTime, endTime,n, "Kruskal"));
 			System.out.println("===================================");
 			System.out.println("KRUSKAL WITH MATRIX USING QUICKSORT");
 			startTime = System.currentTimeMillis();
-			Edge[] QckMat= InsMat= matt.Kruskal(matt.QuickSort());
+			Edge[] QckMat = matt.Kruskal(matt.QuickSort());
 			endTime = System.currentTimeMillis();
-			System.out.println(edgeListToString(QckMat, startTime, endTime,n));
+			System.out.println(edgeListToString(QckMat, startTime, endTime,n, "Kruskal"));
 			System.out.println("===================================");
 			System.out.println("KRUSKAL WITH LIST USING INSERTION SORT");
 			startTime = System.currentTimeMillis();
-			Edge[] InsAjl= InsMat= ajay.Kruskal(ajay.InsertionSort());
+			Edge[] InsAjl = ajay.Kruskal(ajay.InsertionSort());
 			endTime = System.currentTimeMillis();
-			System.out.println(edgeListToString(InsAjl, startTime, endTime,n));
+			System.out.println(edgeListToString(InsAjl, startTime, endTime,n, "Kruskal"));
 			System.out.println("===================================");
 			System.out.println("KRUSKAL WITH LIST USING COUNT SORT");
 			startTime = System.currentTimeMillis();
-			Edge[] CntAjl= InsMat= ajay.Kruskal(ajay.CountSort());
+			Edge[] CntAjl = ajay.Kruskal(ajay.CountSort());
 			endTime = System.currentTimeMillis();
-			System.out.println(edgeListToString(CntAjl, startTime, endTime,n));
+			System.out.println(edgeListToString(CntAjl, startTime, endTime,n, "Kruskal"));
 			System.out.println("===================================");
 			System.out.println("KRUSKAL WITH LIST USING QUICKSORT");
 			startTime = System.currentTimeMillis();
-			Edge[] QckAjl= InsMat= ajay.Kruskal(ajay.QuickSort());
+			Edge[] QckAjl = ajay.Kruskal(ajay.QuickSort());
 			endTime = System.currentTimeMillis();
-			System.out.println(edgeListToString(QckAjl, startTime, endTime,n));
+			System.out.println(edgeListToString(QckAjl, startTime, endTime,n, "Kruskal"));
+			System.out.println("===================================");
+			System.out.println("PRIM WITH ADJACENCY MATRIX");
+			startTime = System.currentTimeMillis();
+			Edge[] PrimMat = matt.Prim();
+			endTime = System.currentTimeMillis();
+			System.out.println(edgeListToString(PrimMat, startTime, endTime,n, "Prim"));
+			System.out.println("===================================");
+			System.out.println("PRIM WITH ADJACENCY LIST");
+			startTime = System.currentTimeMillis();
+			Edge[] PrimAjl = ajay.Prim();
+			endTime = System.currentTimeMillis();
+			System.out.println(edgeListToString(PrimAjl, startTime, endTime,n, "Prim"));
 				
 		} catch (NumberFormatException e){
 			System.out.println("p must be a real number");
@@ -117,7 +129,7 @@ public class MST {
 		
 	}
 	
-	private static String edgeListToString(Edge[] edges, long Start, long End, int n){
+	private static String edgeListToString(Edge[] edges, long Start, long End, int n, String algorithm){
 		String str = "";
 		int totWeight = 0;
 		for (Edge e : edges){
@@ -127,7 +139,7 @@ public class MST {
 			}
 			
 		}
-		str += "\nTotal weight of MST using Kruskal:" + totWeight + "\nRuntime: " + (End - Start) + " milliseconds\n";
+		str += "\nTotal weight of MST using " + algorithm +": " + totWeight + "\nRuntime: " + (End - Start) + " milliseconds\n";
 		return str;
 	}
 	

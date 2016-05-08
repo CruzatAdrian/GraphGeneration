@@ -1,6 +1,8 @@
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 import java.util.TreeMap;
 
@@ -13,9 +15,6 @@ public abstract class Graph {
 	
 	public boolean isConnected(Graph g){
 		TreeMap<Integer,Integer> dfsList = DFS(g);
-//		for(int key : dfsList.keySet()){
-//			System.out.println(key + "<--" + dfsList.get(key));
-//		}
 		return g.size() == dfsList.size();
 	}
 	
@@ -83,9 +82,6 @@ public abstract class Graph {
 		for(int r = 0; r < R + 1; r++){
 			count[r+1] += count[r];
 		}
-//		for (int i : count){
-//			System.out.println(i);
-//		}
 		for(Edge e: toSort){
 			sorted[count[e.getWeight()]] = e;
 			count[e.getWeight()]++;
@@ -117,19 +113,10 @@ public abstract class Graph {
 	}
 	
 	private void Exchange(Edge[] list, int indexA, int indexB){
-//		System.out.println("Before Change list for index " + indexA + " " + indexB);
-//		for(Edge e : list){
-//			System.out.println(e);
-//		}
 		Edge A = new Edge(list[indexA]);
 		Edge B = new Edge(list[indexB]);
 		list[indexA] = B;
 		list[indexB] = A;
-//		System.out.println("After Change list for index" + indexA + " " + indexB);
-//		for(Edge e : list){
-//			System.out.println(e);
-//		}
-//		System.out.println("Done\n");
 	}
 	
 	
@@ -168,5 +155,41 @@ public abstract class Graph {
 		}
 		return edgesMST;
 	}
+	
+	public Edge[] Prim(){
+		PriorityQ q = new PriorityQ(this.size());
+		Edge[] ret = new Edge[this.size() -1];
+		int counter = 0;
+		HashMap<Integer,Edge> map = new HashMap<Integer,Edge>();
+		q.addElement(0, 0);
+		for (int i = 1; i < this.size(); i++){
+			q.addElement(i, Integer.MAX_VALUE);
+		}
+		HashSet<Integer> set = new HashSet<Integer>();
+		while (!q.isEmpty()){
+			PriorityElement p = q.removeTop();
+			set.add(p.getNode());
+			
+			if (p.getNode() != 0){
+				map.put(p.getNode(), new Edge( p.getParent(),p.getNode(), p.getPriority()));
+				//ret[counter] = new Edge( p.getParent(),p.getNode(), p.getPriority());
+				//counter++;
+			}
+			for (Neighbour n : getNeighbourNodes(p.getNode())){
+				if (!set.contains(n.getRightNode())){
+					q.updatePriorityNode(n.getRightNode(), n.getWeight(), p.getNode());
+				}
+				
+			}
+			q.heapify();
+		}
+		for (int key : map.keySet()){
+			ret[counter] = map.get(key);
+			counter++;
+		}
+		return ret;
+	}
+	
+	
 	
 }
